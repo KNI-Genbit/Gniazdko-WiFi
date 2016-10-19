@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Architektura &#8212; Gniazdko-WiFi 0.0.1 - dokumentacja</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Szukaj" href="search.html" />
+    <link rel="top" title="Gniazdko-WiFi 0.0.1 - dokumentacja" href="index.html" />
+    <link rel="next" title="Protokół" href="protocol.html" />
+    <link rel="prev" title="Cel" href="intro.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="architektura">
+<h1>Architektura<a class="headerlink" href="#architektura" title="Stały odnośnik do tego nagłówka">¶</a></h1>
+<p>Wówczas będziemy mieli 1 <strong>serwer/klaster</strong>, który steruje gniazdkami, a także <strong>dwa rodzaje klientów</strong>:</p>
+<ul class="simple">
+<li>odpowiedzialnych za sterowanie gniazdkami,</li>
+<li>gniazdka.</li>
+</ul>
+<p>W przypadku każdej sieciowej aplikacji sieciowej musimy stworzyć <strong>protokół</strong> tzn. <strong>język komunikacji komponentów</strong>, który będzie zrozumiały dla serwera i dla każdego rodzaju klientów. Wydaje mi się, że forma działania takiego protokołu musi wynikać z specyfiki dostępu do Internetu z poziomu mikrokontrolera, aby nie pożerało to ogromnej ilości prądu podczas ciągłego działania. Dzięki ustalonemu protokołowi możemy budować równolegle i niezależnie od siebie komponenty, a potem je spiąć z sobą.</p>
+<p>Będziemy potrzebowali także przechowywać informacje o użytkownikach (login, hasło), a dla nich informacje o urządzeniach (identyfikator, stan). Dane te - ze względu na swój charakter - nie mogą być przechowywane w pamięci operacyjnej aplikacji, bo wystarczy awaria serwera, aby coś się utraciło.</p>
+<a class="reference external image-reference" href="architecture-overview.svg"><img alt="architecture-overview.svg" src="architecture-overview.svg" /></a>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Spis treści</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Cel</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architektura</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protokół</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="intro.html" title="poprzedni rozdział">Cel</a></li>
+      <li>Next: <a href="protocol.html" title="następny rozdział">Protokół</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Ta strona</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/architecture.txt"
+            rel="nofollow">Pokaż źródło</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Szybkie wyszukiwanie</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Szukaj" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, KNI-Genbit.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/architecture.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

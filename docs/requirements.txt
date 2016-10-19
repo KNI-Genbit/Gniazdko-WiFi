@@ -1,0 +1,4 @@
+commonmark==0.5.4
+sphinx_autobuild==0.6.0
+sphinxcontrib-mscgen==0.4
+

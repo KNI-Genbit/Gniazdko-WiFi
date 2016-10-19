@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Protokół &#8212; Gniazdko-WiFi 0.0.1 - dokumentacja</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Szukaj" href="search.html" />
+    <link rel="top" title="Gniazdko-WiFi 0.0.1 - dokumentacja" href="index.html" />
+    <link rel="prev" title="Architektura" href="architecture.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="protokol">
+<h1>Protokół<a class="headerlink" href="#protokol" title="Stały odnośnik do tego nagłówka">¶</a></h1>
+<p>Protokół aplikacji oprzemy na szeroko stosownym i opisanym w literaturze bezstanowy protokole HTTP/1.1. Jest powszechnie stosowany w aplikacjach sieciowych, dostępne jest szereg bibliotek i literatury na jego temat. Jest prostszy w użyciu i debugowaniu od protokołów binarnych, więc będzie przyjaźniejszy dla nowych ludzi.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Dyskusja czy stosować protokół HTTP, czy np. Protobuf lub inne.</p>
+</div>
+<p>Protokół HTTP jest protokołem poziomu aplikacji dla hipermedialnych systemów informatycznych. W obu wersjach jest to protokół bezstanowy, tzn. ani serwer (ani klient) nie przechowuje informacji o tym, jakie były wcześniej zapytania pomiędzy określonym serwerem i klientem oraz nie posiada stanu wewnętrznego. Wykorzystuje wyłącznie protokół TCP do komunikacji klient-serwer. W najczęstszej konfiguracji działa na porcie 80.</p>
+<p>Protokół HTTP jest protokołem żądania i odpowiedzi. Klient wysyła żądanie do serwera w postaci linii żądania zawierającej informacje metody żądania, URI i wersji protokołu, a następnie komunikatu podobnego do wiadomości MIME (ang. Multipurpose Internet Mail Extensions) zawierającego modyfikatory żądania, metainformacje o docelowym serwerze i kliencie (dalej: nagłówki, ang. headers) oraz ewentualnie - oddzielone pustym wierszem – zawartość ciała (ang.body). W odpowiedzi otrzymuje kod statusu odpowiedzi, metainformacje i ciało oddzielone poprzez pusty wiersz.</p>
+<p>W przypadku protokołu proponuje się tylko częściową implementacje protokołu HTTP, ale kompatybilną z popularnymi klientami tego protokołu.</p>
+<p>Przykładowe żądanie bez dodatkowych informacji przedstawia:</p>
+<div class="highlight-html"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>GET /sciezka HTTP/1.1
+User-Agent: curl/7.47.0
+
+HELLO
+</pre></div>
+</td></tr></table></div>
+<p>gdzie:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">GET</span> <span class="pre">/sciezka</span> <span class="pre">HTTP/1.1</span></code> - linia żądania, składająca się z:</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">GET</span></code> – metoda HTTP wykorzystywaną do komunikacji, co w przypadku tego protokołu oznacza wartość POST, PUT, GET lub DELETE,</li>
+<li><code class="docutils literal"><span class="pre">/sciezka</span></code> – adres punktu wejścia dla danego żądania (ang. entry point),</li>
+<li><code class="docutils literal"><span class="pre">HTTP/1.1</span></code> – wersja protokołu HTTP,</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">User-Agent:</span> <span class="pre">curl/7.47.0</span></code> – nagłówek żadania o nazwie <code class="docutils literal"><span class="pre">User-Agent</span></code> i wartośći <code class="docutils literal"><span class="pre">curl/7.47.0</span></code></li>
+<li><code class="docutils literal"><span class="pre">HELLO</span></code> - treść ciała żądania</li>
+</ul>
+</div></blockquote>
+<p>W przypadku zamiaru przekazania ciała żądania należy wykorzystać nagłówek <code class="docutils literal"><span class="pre">`Content-Length`</span></code> dla określenia rozmiaru ciala, a następnie po przesłaniu nagłówków przesłać dodatkowy enter i przesłać ciało w formie tekstowej.</p>
+<p>Do uwierzytelniania użytkowników wykorzystać mechanizm „Basic Access Authentication” przedstawiony w RFC2617. Możliwość zachowania stanów pomiędzy żądaniami zapewnić powiązanie określonych danych z konkretnym użytkownikiem po stronie aplikacji.</p>
+<div class="section" id="sciezki">
+<h2>Ścieżki<a class="headerlink" href="#sciezki" title="Stały odnośnik do tego nagłówka">¶</a></h2>
+<p>Wszelkie zasoby udostępniane przez API są identyfikowane przez ścieżkę. To jest podstawowa forma do identyfikowania jakiegoś rodzaju danych, które mają zostać zmienione przez API.</p>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">Zdefiniować strukturę API z wykorzystaniem <a class="reference external" href="http://swagger.io/specification/">OpenAPI Specification</a>, które wykorzystuje <a class="reference external" href="http://json-schema.org/">JSON Schema</a></p>
+</div>
+<div class="admonition-todo admonition" id="index-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">Przedstawić komunikacje z wykorzystaniem <a class="reference external" href="https://mscgen.js.org/">mscgen</a> i <a class="reference external" href="http://pythonhosted.org/sphinxcontrib-mscgen/">sphinxcontrib-mscgen</a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Spis treści</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Cel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architektura</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Protokół</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sciezki">Ścieżki</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="architecture.html" title="poprzedni rozdział">Architektura</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Ta strona</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/protocol.txt"
+            rel="nofollow">Pokaż źródło</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Szybkie wyszukiwanie</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Szukaj" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, KNI-Genbit.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/protocol.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
