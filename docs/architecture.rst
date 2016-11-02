@@ -10,5 +10,4 @@ W przypadku każdej sieciowej aplikacji sieciowej musimy stworzyć **protokół*
 
 Będziemy potrzebowali także przechowywać informacje o użytkownikach (login, hasło), a dla nich informacje o urządzeniach (identyfikator, stan). Dane te - ze względu na swój charakter - nie mogą być przechowywane w pamięci operacyjnej aplikacji, bo wystarczy awaria serwera, aby coś się utraciło.
 
-.. image:: architecture-overview.svg
-   :target: architecture-overview.svg
+.. image:: _images/architecture-overview.svg
